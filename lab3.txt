@@ -1,0 +1,83 @@
+/******************************************************************************
+to write a c program using structure and enumeration
+*******************************************************************************/
+#include <stdio.h>
+#include <string.h>
+enum designation
+{
+    ACCOUNTANT,
+    CLERK,
+};
+struct employee
+{
+    int emp_id;
+    char emp_name[50];
+    enum designation emp_designation;
+    float emp_salary;
+    char joindate[11];
+    int experience;
+};
+float calculate_accountant_bonus(float emp_salary,int experience)
+{
+    if(experience>5)
+    {
+        return 0.10*emp_salary;
+    }
+    else if(experience>=3 && experience<5)
+    {
+        return 0.05*emp_salary;
+    }
+    else 
+    {
+        return 0.02*emp_salary;
+    }
+}
+float calculate_clerk_bonus(float emp_salary,int experience)
+{
+    if(experience>5)
+    {
+        return 0.15*emp_salary;
+    }
+    else if(experience >=3)
+    {
+        return 0.10*emp_salary;
+    }
+    else
+    {
+        return 0.05*emp_salary;
+    }
+}
+int main()
+{
+    struct employee e[10];
+    int i,desig; 
+    for(i=0;i<10;i++)
+    {
+        printf("enter the employee id:");
+        scanf("%d",&e[i].emp_id);
+        printf("enter the employee name:");
+        scanf("%s",e[i].emp_name);
+        printf("enter the employee salary:");
+        scanf("%f",&e[i].emp_salary);
+        printf("enter the date of joining (DD/MM/YYYY):");
+        scanf("%s",e[i].joindate);
+        printf("enter the years of experience:");
+        scanf("%d",&e[i].experience);
+        printf("enter the employee position (0 for ACCOUNTANT and 1 for CLERK):");
+        scanf("%d",&desig);
+        e[i].emp_designation=(enum designation)desig;
+        
+        float bonus;
+        if(e[i].emp_designation==ACCOUNTANT)
+        {
+            bonus=calculate_accountant_bonus(e[i].emp_salary,e[i].experience);
+        }
+        else
+        {
+            bonus=calculate_clerk_bonus(e[i].emp_salary,e[i].experience);
+        }
+        printf("employee id:%d,name:%s,salary:%2f,joindate:%s,experience:%d years,designation:%s,bonus:%2f\n",e[i].emp_id,e[i].emp_name,e[i].emp_salary,e[i].joindate,e[i].experience,e[i].emp_designation==ACCOUNTANT?"accountant":"clerk",bonus);
+        
+    }
+    return 0;
+}
